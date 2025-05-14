@@ -3,6 +3,10 @@ const sql = require('mssql');
 const cors = require('cors'); // Importar el middleware CORS
 const config = require('./dbConfig'); // Importar la configuración
 
+// Importar rutas
+const loginRoutes = require('./routes/Login');
+const ticketRoutes = require('./routes/Tickets');
+
 const app = express();
 app.use(express.json());
 
@@ -10,40 +14,31 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:3000', // Permitir solicitudes desde el frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type'] // Encabezados permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
 }));
 
-// Ruta de login
-app.post('/api/login', async (req, res) => {
-  const { usuario } = req.body;  // Capturamos el usuario ingresado
+// Conexión a la base de datos
+sql.connect(config)
+  .then(() => console.log('Conexión a la base de datos establecida'))
+  .catch(err => console.error('Error al conectar a la base de datos:', err));
 
-  try {
-    const pool = await sql.connect(config);
-    
-    console.log("Buscando usuario:", usuario);  // Log para verificar que el usuario llega correctamente
-    
-    const result = await pool.request()
-      .input('Usuario', sql.VarChar, usuario)
-      .query('SELECT NumeroBox FROM OperadorBox WHERE USUARIO = @Usuario');
-    
-    console.log("Resultado de la consulta:", result.recordset);  // Log para ver los resultados de la consulta
+// Usar rutas
+app.use('/api/login', loginRoutes);
+app.use('/api/tickets', ticketRoutes);
 
-    if (result.recordset.length > 0) {
-      res.json({
-        success: true,
-        userData: {
-          usuario: usuario,
-          numeroBox: result.recordset[0].NumeroBox,
-        },
-      });
-    } else {
-      console.log("Usuario no encontrado");
-      res.json({ success: false, message: "Usuario no encontrado" });
-    }
-  } catch (err) {
-    console.error("Error en el servidor:", err.message);  // Ver el error detallado en la consola
-    res.status(500).send("Error en el servidor");
-  }
+// Ruta base para verificar que el servidor está funcionando
+app.get('/', (req, res) => {
+  res.send('API del Tablero de Turnos funcionando correctamente');
+});
+
+// Manejador de errores global
+app.use((err, req, res, next) => {
+  console.error('Error en el servidor:', err);
+  res.status(500).json({
+    success: false,
+    message: 'Error en el servidor',
+    error: process.env.NODE_ENV === 'development' ? err.message : null
+  });
 });
 
 // Iniciar el servidor
