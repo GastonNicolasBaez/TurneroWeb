@@ -1,0 +1,293 @@
+.statistics {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: var(--font-main, 'Inter', 'Segoe UI', sans-serif);
+  color: var(--text-primary, #ffffff);
+  background-color: var(--bg-dark, #121927);
+  min-height: 100vh;
+}
+
+.statistics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border-color, #334155);
+  padding-bottom: 15px;
+}
+
+.statistics h2 {
+  margin: 0;
+  color: var(--text-primary, #ffffff);
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.statistics h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--text-primary, #ffffff);
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-filter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.filter-button {
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  background-color: var(--primary-color, #4a6cf7);
+  border-radius: 6px;
+}
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background-color: var(--bg-card, #1e293b);
+  padding: 20px;
+  border-radius: var(--border-radius, 12px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--border-color, #334155);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo especial para la tarjeta de ausentes */
+.stat-card.absent-card {
+  background: linear-gradient(to bottom, rgba(231, 76, 60, 0.05), var(--bg-card, #1e293b));
+  border-top: 3px solid var(--danger-color, #e74c3c);
+}
+
+.stat-card.absent-card .stat-value {
+  color: var(--danger-color, #e74c3c);
+}
+
+/* Estilo especial para la tarjeta de eficiencia */
+.stat-card.efficiency-card {
+  background: linear-gradient(to bottom, rgba(46, 204, 113, 0.05), var(--bg-card, #1e293b));
+  border-top: 3px solid var(--success-color, #2ecc71);
+  grid-column: 1 / -1;
+}
+
+.stat-card.efficiency-card .stat-value {
+  color: var(--success-color, #2ecc71);
+  font-size: 3rem;
+}
+
+.stat-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #94a3b8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #4a6cf7);
+  line-height: 1.2;
+}
+
+.stats-container {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--bg-card, #1e293b);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius, 12px);
+  overflow: hidden;
+  border: 1px solid var(--border-color, #334155);
+  margin-bottom: 30px;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color, #334155);
+}
+
+.stats-table th {
+  background-color: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.stats-table tr:last-child td {
+  border-bottom: none;
+}
+
+.stats-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success-color, #2ecc71), var(--primary-color, #4a6cf7));
+  transition: width 0.5s ease;
+}
+
+.progress-bar span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.statistics-actions {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button.secondary {
+  background-color: var(--primary-color, #4a6cf7);
+  color: white;
+}
+
+.button.primary {
+  background-color: var(--success-color, #2ecc71);
+  color: white;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  filter: brightness(110%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--bg-card, #1e293b);
+  border-radius: var(--border-radius, 12px);
+  color: var(--text-secondary, #94a3b8);
+  font-style: italic;
+  border: 1px solid var(--border-color, #334155);
+  margin: 10px 0 30px;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+  position: relative;
+}
+
+.no-data::before {
+  content: "ℹ️";
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.statistics.loading,
+.statistics.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.statistics.error {
+  color: var(--danger-color, #e74c3c);
+}
+
+@media (max-width: 768px) {
+  .statistics {
+    padding: 20px;
+  }
+  
+  .statistics-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .stats-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+  
+  .stat-card.efficiency-card .stat-value {
+    font-size: 2.5rem;
+  }
+} 

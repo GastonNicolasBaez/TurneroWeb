@@ -1,0 +1,541 @@
+:root {
+  --primary-color: #00a8e8;
+  --primary-dark: #0077b6;
+  --accent-color: #16db93;
+  --light-blue: #e3f6f5;
+  --dark-blue: #003459;
+  --light-gray: #f0f4f8;
+  --medium-gray: #ced9e5;
+  --dark-gray: #627d98;
+  --text-color: #1e293b;
+  --white: #ffffff;
+  --error-color: #e63946;
+  --warning-color: #f77f00;
+  --success-color: #16db93;
+  --border-radius: 16px;
+  --box-shadow-soft: 0 6px 24px rgba(0, 40, 85, 0.12);
+  --box-shadow-strong: 0 12px 32px rgba(0, 40, 85, 0.2);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-main: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  --header-height: 8vh;
+  --footer-height: 7vh;
+  --main-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--light-blue);
+  font-family: var(--font-main);
+  height: 100%;
+  width: 100%;
+}
+
+.public-display {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(120deg, var(--light-blue), var(--light-gray));
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.public-header {
+  height: var(--header-height);
+  padding: 0 2rem;
+  background: var(--white);
+  text-align: center;
+  box-shadow: var(--box-shadow-soft);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hospital-logo {
+  display: flex;
+  align-items: center;
+}
+
+.hospital-logo .icon {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-right: 1rem;
+}
+
+.hospital-logo h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.update-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.update-time {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.update-time::before {
+  content: '⟳';
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+  animation: spin 10s linear infinite;
+}
+
+.current-date {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.2rem;
+}
+
+.error-message {
+  background-color: rgba(230, 57, 70, 0.1);
+  color: var(--error-color);
+  padding: 0.8rem;
+  margin: 0.5rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  border-left: 4px solid var(--error-color);
+  font-weight: 500;
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.tickets-display {
+  height: var(--main-height);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal con sombra y fondo */
+.tickets-container {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-soft);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Barra superior con título */
+.display-header {
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+  color: var(--white);
+  padding: 0.8rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.display-header .icon {
+  margin-right: 0.8rem;
+  font-size: 1.6rem;
+}
+
+/* Contenido principal */
+.display-content {
+  display: flex;
+  flex: 1;
+  position: relative;
+  min-height: 0; /* Importante para evitar overflow */
+}
+
+/* Panel izquierdo - Número actual */
+.current-number-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #f8fafc, #e3f6f5);
+}
+
+.current-label {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.current-numero {
+  font-size: 18vw; /* Usar vw para que se ajuste al ancho de la pantalla */
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 0.9;
+  text-shadow: 3px 3px 0 rgba(0, 168, 232, 0.2);
+  animation: pulseNumber 2s infinite alternate;
+  transition: var(--transition);
+}
+
+/* Panel derecho - Box actual */
+.current-box-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--primary-dark);
+  color: var(--white);
+  position: relative;
+}
+
+.box-label {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.current-box {
+  font-size: 16vw; /* Usar vw para que se ajuste al ancho de la pantalla */
+  font-weight: 800;
+  line-height: 0.9;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Decoración */
+.panel-decoration {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+}
+
+.decoration-top-right {
+  top: -80px;
+  right: -80px;
+}
+
+.decoration-bottom-left {
+  bottom: -80px;
+  left: -80px;
+}
+
+/* Sección de tickets anteriores */
+.previous-tickets {
+  background: var(--white);
+  padding: 0.8rem 1.5rem;
+  border-top: 1px solid var(--medium-gray);
+  max-height: 20%;
+}
+
+.previous-header {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.previous-header .icon {
+  margin-right: 0.5rem;
+}
+
+.previous-list {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+  height: 75%; /* Limitar la altura */
+}
+
+.previous-ticket {
+  background: var(--light-gray);
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideIn 0.5s ease;
+}
+
+.previous-numero {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+}
+
+.previous-box {
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--primary-dark);
+  color: var(--white);
+  padding: 0.2rem 0.8rem;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+}
+
+.no-tickets {
+  padding: 2rem;
+  text-align: center;
+  font-size: 2.2rem;
+  color: var(--dark-gray);
+  background: var(--white);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-tickets .icon {
+  font-size: 5rem;
+  color: var(--medium-gray);
+  margin-bottom: 1.5rem;
+}
+
+.no-tickets-message {
+  font-weight: 500;
+}
+
+.public-footer {
+  height: var(--footer-height);
+  padding: 0;
+  background: var(--primary-dark);
+  color: var(--white);
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: var(--box-shadow-soft);
+}
+
+.instruction {
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instruction .icon {
+  margin-right: 0.8rem;
+  animation: bounce 2s infinite;
+}
+
+.public-display.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  color: var(--primary-dark);
+  text-align: center;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 122, 182, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 1.2rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-15px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulseNumber {
+  from { transform: scale(1); }
+  to { transform: scale(1.03); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos responsivos adaptados para formato hospitalario y evitar scroll */
+@media (max-width: 1200px) {
+  .current-label, .box-label {
+    font-size: 1.8rem;
+  }
+  
+  .previous-tickets {
+    max-height: 18%;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --header-height: 10vh;
+    --footer-height: 8vh;
+  }
+  
+  .display-content {
+    flex-direction: column;
+  }
+  
+  .current-number-panel {
+    padding: 0.8rem 0.5rem;
+  }
+  
+  .current-box-panel {
+    padding: 0.8rem 0.5rem;
+  }
+  
+  .current-label, .box-label {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .current-numero {
+    font-size: 16vw;
+  }
+  
+  .current-box {
+    font-size: 15vw;
+  }
+  
+  .previous-tickets {
+    display: none; /* Ocultar en pantallas pequeñas para evitar scroll */
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 12vh;
+    --footer-height: 10vh;
+  }
+  
+  .hospital-logo h1 {
+    font-size: 1.3rem;
+  }
+  
+  .hospital-logo .icon {
+    font-size: 1.6rem;
+  }
+  
+  .current-date {
+    font-size: 0.9rem;
+  }
+  
+  .update-time {
+    font-size: 0.8rem;
+  }
+  
+  .current-label, .box-label {
+    font-size: 1.4rem;
+  }
+  
+  .instruction {
+    font-size: 1.2rem;
+  }
+  
+  .public-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    justify-content: center;
+  }
+  
+  .update-info {
+    align-items: center;
+  }
+}
+
+/* Estilos para el indicador de último ticket procesado */
+.last-ticket-indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(0, 77, 116, 0.6);
+  padding: 5px;
+  border-radius: 4px;
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* Estilos para mostrar el estado del ticket */
+.ticket-status {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ticket-status.atendido {
+  background-color: rgba(46, 204, 113, 0.25);
+  color: #2ecc71;
+  border: 2px solid #2ecc71;
+}
+
+.ticket-status.ausente {
+  background-color: rgba(231, 76, 60, 0.25);
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+}
+
+.ticket-status.finalizado {
+  background-color: rgba(52, 152, 219, 0.25);
+  color: #3498db;
+  border: 2px solid #3498db;
+} 
